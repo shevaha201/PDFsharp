@@ -136,7 +136,7 @@ namespace PdfSharp.Drawing
         { }
 #endif
 
-#if GDI
+#if GDI && !NETSTANDARD2_0
         XColor(KnownColor knownColor)
             : this(System.Drawing.Color.FromKnownColor(knownColor))
         { }
@@ -303,7 +303,7 @@ namespace PdfSharp.Drawing
             return new XColor(color);
         }
 
-#if GDI
+#if GDI && !NETSTANDARD2_0
         /// <summary>
         /// Creates an XColor from the specified pre-defined color.
         /// </summary>
@@ -318,7 +318,7 @@ namespace PdfSharp.Drawing
         /// </summary>
         public static XColor FromName(string name)
         {
-#if GDI
+#if GDI && !NETSTANDARD2_0
             // The implementation in System.Drawing.dll is interesting. It uses a ColorConverter
             // with hash tables, locking mechanisms etc. I'm not sure what problems that solves.
             // So I don't use the source, but the reflection.

@@ -88,6 +88,12 @@ namespace PdfSharp.Fonts
 
                 // Is there a custom font resolver available?
                 IFontResolver customFontResolver = GlobalFontSettings.FontResolver;
+
+#if NETSTANDARD2_0
+                if (customFontResolver == null)
+                    throw new NotImplementedException("IFontResolver not implemented or not registered. Implement it and register in GlobalFontSettings.FontResolver");
+#endif
+
                 if (customFontResolver != null)
                 {
                     // Case: Use custom font resolver.
