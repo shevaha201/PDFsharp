@@ -106,7 +106,7 @@ namespace PdfSharp.Drawing  // #??? Clean up
         // TODO: Implement better concept of a measure context.
 #endif
 
-#if GDI
+#if GDI || NETSTANDARD2_0
         /// <summary>
         /// Initializes a new instance of the XGraphics class.
         /// </summary>
@@ -122,7 +122,12 @@ namespace PdfSharp.Drawing  // #??? Clean up
                 try
                 {
                     Lock.EnterGdiPlus();
+#if GDI && !NETSTANDARD2_0
                     gfx = Graphics.FromHwnd(IntPtr.Zero);  // BUG: Use measure image
+#endif
+#if GDI && NETSTANDARD2_0
+                    gfx = Graphics.FromImage(new Bitmap(1, 1));
+#endif
                 }
                 finally { Lock.ExitGdiPlus(); }
             }
